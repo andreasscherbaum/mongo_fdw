@@ -55,7 +55,7 @@ function checkout_json_lib
 	cd json-c
 	patch -p1 < ../json_compilation_error.patch
 	cd ..
-	rm -rf json-c-0.12-20140410.tar.gz
+	rm -rf json-c-0.12.1-20160607.tar.gz
 	echo $PWD
 }
 
