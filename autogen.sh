@@ -17,10 +17,14 @@
 
 MONGOC_VERSION=1.9.5
 JSONC_VERSION=0.13.1-20180305
+PREFIX="/usr/local"
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: autogen.sh --[with-legacy | with-master]"
+if [ "$#" -ne 1 -a "$#" -ne 2 ]; then
+    echo "Usage: autogen.sh --[with-legacy | with-master] [prefix]"
     exit
+fi
+if [ "$#" -eq 2 ]; then
+    PREFIX=$2
 fi
 
 ###
@@ -70,7 +74,7 @@ function install_json_lib
 {
 	cd json-c
 	sh ./autogen.sh
-	./configure CFLAGS='-fPIC'
+	./configure CFLAGS='-fPIC' --prefix=$1
 	make install
 	cd ..
 }
@@ -81,7 +85,7 @@ function install_json_lib
 function install_mongoc_driver
 {
 	cd mongo-c-driver
-	./configure --with-libbson=auto --enable-ssl
+	./configure --with-libbson=auto --enable-ssl --prefix=$1
 	make install
 	cd ..
 }
@@ -117,12 +121,12 @@ if [ "--with-legacy" = $1 ]; then
 elif [ "--with-master" == $1 ]; then
 	checkout_mongo_driver
 	checkout_json_lib
-	install_mongoc_driver
-	install_json_lib
+	install_mongoc_driver $PREFIX
+	install_json_lib $PREFIX
 	create_config
 	export PKG_CONFIG_PATH=mongo-c-driver/src/:mongo-c-driver/src/libbson/src
 	cp Makefile.meta Makefile
 	echo "Done"
 else
-	echo "Usage: autogen.sh --[with-legacy | with-master]"
+	echo "Usage: autogen.sh --[with-legacy | with-master] [prefix]"
 fi
