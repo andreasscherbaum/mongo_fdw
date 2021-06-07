@@ -85,7 +85,7 @@ jobs:
         run: printf "use pgtest\ndb.createCollection('pgtesttable')" | mongo
 
       - name: create user
-        run: printf "use pgtest\ndb.createUser(\{ user: 'test', pwd: 'connecttest', roles: \[ 'readWrite' \] \})" | mongo
+        run: printf "use pgtest\\ndb.createUser(\{ user: 'test', pwd: 'connecttest', roles: \[ 'readWrite' \] \})" | mongo
 
       - name: insert data into collection
         run: printf "use pgtest\ndb.pgtesttable.insert( { question: '42', answer: 'the ultimative answer' } )" | mongo
