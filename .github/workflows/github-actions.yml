@@ -66,22 +66,33 @@ jobs:
 
       - name: Get list of PostgreSQL packages
         run: echo "::set-output name=Packages::$(dpkg-query -f '${Package}\n' -W | grep ^postgresql | xargs)"
-        id: preinstalled_packages
+        id: preinstalled_postgresql_packages
 
       - name: Remove preinstalled PostgreSQL packages
-        run: sudo dpkg --purge ${{ steps.preinstalled_packages.outputs.Packages }}
+        run: sudo dpkg --purge ${{ steps.preinstalled_postgresql_packages.outputs.Packages }}
 
 
       # verify result
       - name: Installed PostgreSQL packages
         run: dpkg --list | grep postgresql
 
-      - name: Installed PostgreSQL packages
-        run: dpkg --list | grep mongo
 
       # there might be MongoDB packages pre-installed, remove them
+      - name: Installed MongoDB packages
+        run: dpkg --list | grep mongodb
+
+      - name: Get list of MongoDB packages
+        run: echo "::set-output name=Packages::$(dpkg-query -f '${Package}\n' -W | grep mongodb | xargs)"
+        id: preinstalled_mongodb_packages
+
       - name: Remove preinstalled MongoDB packages
-        run: sudo dpkg --purge mongodb-org mongodb
+        run: sudo dpkg --purge ${{ steps.preinstalled_mongodb_packages.outputs.Packages }}
+
+
+      # verify result
+      - name: Installed MongoDB packages
+        run: dpkg --list | grep mongodb
+
 
       # install MongoDB
       - name: Install MongoDB
