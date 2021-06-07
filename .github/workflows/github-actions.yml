@@ -115,7 +115,7 @@ jobs:
 
       # do the actual compilation
       - name: Compile the extension
-        run: cd ${{ steps.pwd.outputs.PWD }} && autogen.sh --with-legacy
+        run: cd ${{ steps.pwd.outputs.PWD }} && ./autogen.sh --with-legacy
 
       - name: Test the extension
         run: cd ${{ steps.pwd.outputs.PWD }} && make check
