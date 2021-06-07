@@ -89,9 +89,9 @@ jobs:
         run: sudo dpkg --purge ${{ steps.preinstalled_mongodb_packages.outputs.Packages }}
 
 
-      # verify result
-      - name: Installed MongoDB packages
-        run: dpkg --list | grep mongodb
+#      # verify result
+#      - name: Installed MongoDB packages
+#        run: dpkg --list | grep mongodb
 
 
       # install MongoDB
