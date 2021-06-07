@@ -158,6 +158,19 @@ jobs:
         run: cd ${{ steps.pwd.outputs.PWD }} && sudo make install
 
 
+      - name: /usr/local
+        run: ls -ld /usr/local/lib/*
+
+      - name: /etc/ld.so.conf
+        run: cat /etc/ld.so.conf
+
+      - name: /etc/ld.so.conf.d
+        run: cat /etc/ld.so.conf.d/*
+
+      - name: /etc/ld.so.conf.d
+        run: ls -ld /etc/ld.so.conf.d/*
+
+
       # start testing
 
       - name: Get current branch name
