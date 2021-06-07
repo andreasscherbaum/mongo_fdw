@@ -230,4 +230,4 @@ jobs:
 
       # run FDW tests
       - name: Run mondo_fdw tests
-        run: ${{ steps.pwd.outputs.PWD }}/.github/resources/test-mongodb.sh
+        run: sudo -iu postgres ${{ steps.pwd.outputs.PWD }}/.github/resources/test-mongodb.sh
