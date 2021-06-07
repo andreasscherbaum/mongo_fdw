@@ -77,6 +77,23 @@ jobs:
         run: dpkg --list | grep postgresql
 
 
+      # install MongoDB
+      - name: Install MongoDB
+        run: sudo apt-get install -y mongodb-clients mongodb-server
+
+      - name: create database and collection
+        run: printf "use pgtest\ndb.createCollection('pgtesttable')" | mongo
+
+      - name: create user
+        run: printf "use pgtest\ndb.createUser({ user: 'test', pwd: 'connecttest', roles: [ 'readWrite' ] })" | mongo
+
+      - name: insert data into collection
+        run: printf "use pgtest\ndb.pgtesttable.insert( { question: '42', answer: 'the ultimative answer' } )" | mongo
+
+      - name: read data from collection
+        run: printf "use pgtest\ndb.pgtesttable.find()" | mongo
+
+
       # install build tools
       - name: Install build-essential and other tools
         run: sudo apt-get install -y build-essential ruby curl ca-certificates gnupg cmake libjson-c-dev
@@ -122,18 +139,15 @@ jobs:
 
 
       # do the actual compilation
-      - name: Compile the extension
-        run: cd ${{ steps.pwd.outputs.PWD }} && ./autogen.sh --with-legacy
+      - name: Configure the extension
+        run: cd ${{ steps.pwd.outputs.PWD }} && ./autogen.sh --with-master
 
-      - name: Test the extension
-        run: cd ${{ steps.pwd.outputs.PWD }} && make check
+      - name: Compile the extension
+        run: cd ${{ steps.pwd.outputs.PWD }} && make
 
       # install extension
       - name: Install the extension
         run: cd ${{ steps.pwd.outputs.PWD }} && sudo make install
-
-      - name: Test the extension
-        run: cd ${{ steps.pwd.outputs.PWD }} && make PGUSER=postgres installcheck
 
 
       # start testing
