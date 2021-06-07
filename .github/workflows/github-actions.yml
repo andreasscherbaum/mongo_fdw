@@ -76,6 +76,12 @@ jobs:
       - name: Installed PostgreSQL packages
         run: dpkg --list | grep postgresql
 
+      - name: Installed PostgreSQL packages
+        run: dpkg --list | grep mongo
+
+      # there might be MongoDB packages pre-installed, remove them
+      - name: Remove preinstalled MongoDB packages
+        run: sudo dpkg --purge mongodb-org mongodb
 
       # install MongoDB
       - name: Install MongoDB
