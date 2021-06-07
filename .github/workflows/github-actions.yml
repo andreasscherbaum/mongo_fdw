@@ -23,8 +23,8 @@ jobs:
     name: Test the extension
     runs-on: ${{ matrix.os }}
     env:
-      EXTENSION_NAME: ajhash
-      EXTENSION_DB: ajtest
+      EXTENSION_NAME: mongo_fdw
+      EXTENSION_DB: moongodb_test
       EXTENSION_BRANCH: master
       EXTENSION_SUBDIRECTORY: ""
       EXTENSION_TEST_QUERY: ""
