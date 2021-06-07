@@ -35,6 +35,19 @@ jobs:
         os: [ubuntu-latest]
         postgresql: [9.6, 10, 11, 12, 13, 14]
         #postgresql: [12]
+        include:
+          - postgresql: 9.6
+            repo: main
+          - postgresql: 10
+            repo: main
+          - postgresql: 11
+            repo: main
+          - postgresql: 12
+            repo: main
+          - postgresql: 13
+            repo: main
+          - postgresql: 14
+            repo: 14
       fail-fast: false
 
     steps:
@@ -90,11 +103,6 @@ jobs:
         run: sudo dpkg --purge ${{ steps.preinstalled_mongodb_packages.outputs.Packages }}
 
 
-#      # verify result
-#      - name: Installed MongoDB packages
-#        run: dpkg --list | grep mongodb
-
-
       # install MongoDB
       - name: Install MongoDB
         run: sudo apt-get install -y mongodb-clients mongodb-server
@@ -121,7 +129,7 @@ jobs:
         run: curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
       - name: Install repository
-        run: sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+        run: sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg ${{ matrix.repo }}" > /etc/apt/sources.list.d/pgdg.list'
 
       - name: Update repository
         run: sudo apt-get update
