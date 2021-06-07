@@ -170,6 +170,9 @@ jobs:
       - name: /etc/ld.so.conf.d
         run: ls -ld /etc/ld.so.conf.d/*
 
+      - name: ldconfig
+        run: ldconfig
+
 
       # start testing
 
