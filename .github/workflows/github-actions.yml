@@ -46,6 +46,8 @@ jobs:
             repo: main
           - postgresql: 13
             repo: main
+          # development branch needs the version number, not "main"
+          # https://wiki.postgresql.org/wiki/Apt/FAQ#I_want_to_try_the_beta_version_of_the_next_PostgreSQL_release
           - postgresql: 14
             repo: 14
       fail-fast: false
