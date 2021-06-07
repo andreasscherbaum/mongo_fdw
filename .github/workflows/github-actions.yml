@@ -84,6 +84,9 @@ jobs:
       - name: Show cmake version
         run: cmake --version
 
+      - name: Link cmake3
+        run: sudo sh -c 'if test \! -e /usr/bin/cmake3; then ln -s /usr/bin/cmake /usr/bin/cmake3; done'
+
       # enable PostgreSQL APT repository
       - name: Install GPG Key for PostgreSQL repository
         run: curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
