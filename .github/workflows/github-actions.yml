@@ -120,8 +120,8 @@ jobs:
       - name: Show cmake version
         run: cmake --version
 
-      - name: Link cmake3
-        run: sudo sh -c 'if test \! -e /usr/bin/cmake3; then ln -s /usr/bin/cmake /usr/bin/cmake3; fi'
+      #- name: Link cmake3
+      #  run: sudo sh -c 'if test \! -e /usr/bin/cmake3; then ln -s /usr/bin/cmake /usr/bin/cmake3; fi'
 
       - name: Chown /usr/local
         run: sudo chown runner. /usr/local /usr/local/*
